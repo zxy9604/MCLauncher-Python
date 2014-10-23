@@ -18,19 +18,28 @@ def loadConfig():
 
 #Sync mods
 
-def fetchModList(server):
+def fetchVersionList(server):
+    print("Fetching version list from server...")
     return json.loads(urllib.request.urlopen(server).read().decode())
 
+def fetchModList(server, version):
+    print("Change directory to /mods..")
+    os.chdir(config["path"]+'/mods')
+    print("Fetching mods list from server...")
+    return json.loads(urllib.request.urlopen(server+'?version='+version).read().decode())
 
 
 
 if __name__ == "__main__":
     config = loadConfig()
-    modlist = fetchModList(config['server']+'version.php')
+    versionList = fetchVersionList(config['server']+'version.php')
+    serverPath = versionList[config['version']]['server_path']
+    modlist = fetchModList(config['server']+'mods.php', config['version'])
+    print("Start downloading mods from server...")
     for f in modlist:
         if not os.path.exists(f):
             print("Find:", f)
-            url = config['server'] + config['version'] + '/' +'mods' + '/'
+            url = config['server'] + serverPath[2:] + '/mods/'
             url += f[2:]
             print("Download from",url)
             try:
