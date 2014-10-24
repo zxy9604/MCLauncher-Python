@@ -85,6 +85,19 @@ def prepareArgs(conf):
                           "tweakClass" : "cpw.mods.fml.common.launcher.FMLTweaker",
                           "mainClass" : "wtf"
                           }
+    if config['authenticate'] == True:
+        if (not 'username' in config) or (not 'password' in config):
+            print("It seems there is no valid username/password, please change `authenticate` to false or add your own profile here.")
+            print("Now entering illegal version...")
+        else:
+            try:
+                auth = authenticate(config['username'], config['password'])
+                minecraftArguments['username'] = auth['name']
+                minecraftArguments['uuid'] = auth['uuid']
+                minecraftArguments['accessToken'] = auth['accessToken']
+            except:
+                print("Invalid combination of username and password. Please verify it again.")
+                print("Now entering illegal version...")
 
 def parsePreparedArgs(args):
     return "{config[mainClass]} --username {config[username]} --version {config[version]} --gameDir {config[gameDir]}/versions/{config[version]} --assetsDir {config[assetsDir]} --uuid {config[uuid]} --accessToken {config[accessToken]} --userProperties {config[userProperties]} --userType {config[userType]} --tweakClass {config[tweakClass]}".format(config = args)
@@ -176,6 +189,29 @@ def getSystemType():
     elif sysstr == 'Darwin' :
         return 'osx'
 
+def authenticate(username, password, clientToken = ""):
+    url = 'https://authserver.mojang.com/authenticate'
+    params = json.dumps({
+              "agent": {
+                        "name": "Minecraft",
+                        "version": 1
+                       },
+              "username": username,
+              "password": password,
+              "clientToken": clientToken
+            }).encode()
+    header = {'Content-type': 'application/json'}
+    req = urllib.request.Request(
+        url=url,
+        data=params,
+        headers=header
+    )
+    res = json.loads(urllib.request.urlopen(req).read().decode())
+    return {"accessToken" : res["accessToken"],
+            "clientToken" :res["clientToken"],
+            "uuid" : res["selectedProfile"]["id"],
+            "name" : res["selectedProfile"]["name"]
+            }
 
 if __name__ == "__main__":
     cwd = os.getcwd()
