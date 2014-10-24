@@ -31,7 +31,7 @@ def fetchVersionList(server):
     print("Fetching version list from server...")
     return json.loads(urllib.request.urlopen(server + 'version.php').read().decode())
 
-def fetchModList(server, version):
+def fetchModList(server, version, source):
     if not os.path.exists("versions/" + version):
         downloadVersion(server, version)
     os.chdir("versions/" + version)
@@ -39,13 +39,34 @@ def fetchModList(server, version):
         os.mkdir('mods')
     os.chdir('mods')                                #mark: change dir to 'mods'
     print("Fetching mods list from server...")
-    return json.loads(urllib.request.urlopen(server+'mods.php'+'?version='+version).read().decode())
+    return json.loads(urllib.request.urlopen(server+'mods.php'+'?version='+version+'&source='+source).read().decode())
 
 def downloadMods(config):
+    cwd = os.getcwd()
     versionList = fetchVersionList(config['server'])
     serverPath = versionList[config['version']]['server_path']
-    modlist = fetchModList(config['server'], config['version'])
+    modlist = fetchModList(config['server'], config['version'], 'server')
     print("Start downloading mods from server...")
+    for f in modlist:
+        if not os.path.exists(f):
+            print("Find:", f)
+            url = config['server'] + serverPath[2:] + '/mods/'
+            url += f[2:]
+            url = url.replace(' ', '%20')           #fix some coding problems in http
+            print("Download from",url)
+            dirpath = f[:len(f)-f[::-1].find('/')]
+            if not os.path.exists(dirpath):         #to check whether such a dir exists, if not, make it.
+                os.makedirs(dirpath)
+            try:
+                urllib.request.urlretrieve(url, f)
+            except UnicodeEncodeError:              #fucking encode problem. Never mind.
+                print("Ignore it")
+            except:
+                print("The server is down right now. Please try again later!")
+    serverPath = versionList[config['version']]['client_path']
+    #copy above codes here, but really tired to give it a elegent implementation.
+    os.chdir(cwd)
+    modlist = fetchModList(config['server'], config['version'], 'client')
     for f in modlist:
         if not os.path.exists(f):
             print("Find:", f)

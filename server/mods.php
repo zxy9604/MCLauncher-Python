@@ -22,7 +22,10 @@ function get_filenamesbydir($dir){
 
 $versions = json_decode(file_get_contents("version.conf"), true);
 $currentversion = $versions[$_GET["version"]];
-$path = $currentversion["server_path"];
+if ($_GET["source"] == "server")
+    {$path = $currentversion["server_path"];}
+else if ($_GET["source"] == "client")
+    {$path = $currentversion["client_path"];}
 chdir("$path/mods");
 $filenames = get_filenamesbydir(".");
 
