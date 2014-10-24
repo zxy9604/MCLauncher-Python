@@ -1,0 +1,11 @@
+{
+    "sync" : false,
+    "server": "http://mc.tbufoundation.com/",
+    "username": "Hentai",
+    "version": "1.8",
+    "gameDir": ".minecraft",
+    "assetsDir": ".minecraft/assets",
+    "maxMem": "1G",
+    "javaPath" : "",
+    "arch" : "64"
+}

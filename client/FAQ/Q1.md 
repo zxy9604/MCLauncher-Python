@@ -1,0 +1,8 @@
+如果出现:
+
+	[main/ERROR] [LaunchWrapper]: Unable to launch java.util.ConcurrentModificationException
+
+
+这样的错误
+
+恭喜你 赶快逃离Java8的魔爪 换回Java7吧233
