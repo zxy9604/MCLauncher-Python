@@ -1,6 +1,7 @@
 {
     "sync" : true,
     "authenticate" : true,
+    "twitch" : false,
     "server": "http://mc.tbufoundation.com/",
     "username": "Hentai",
     "password": "2333333",

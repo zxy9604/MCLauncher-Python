@@ -1,3 +1,7 @@
+#A simple minecraft launcher
+#By Ray Zhang
+#Oct 23. 2014
+
 import json
 import os
 import urllib.request
@@ -71,17 +75,17 @@ def launchMinecraft(args):
     os.chdir('..')
     os.system(args)
 
-def prepareArgs(conf):
+def prepareArgs(config):
     global minecraftArguments
-    minecraftArguments = {"username" : conf["username"],
-                          "version": conf["version"],
-                          "gameDir": conf["gameDir"],
-                          "assetsDir" : conf["assetsDir"],
+    minecraftArguments = {"username" : config["username"],
+                          "version": config["version"],
+                          "gameDir": config["gameDir"],
+                          "assetsDir" : config["assetsDir"],
                           "assetIndex" : "1.7.10",      #所以这到底是啥
                           "accessToken" : '{}',         #待补全X1
                           "uuid" : '{}',                #待补全X2
                           "userProperties" : '{}',      #233
-                          "userType" : "mojang",        #or legacy
+                          "userType" : "legacy",        #or mojang
                           "tweakClass" : "cpw.mods.fml.common.launcher.FMLTweaker",
                           "mainClass" : "wtf"
                           }
@@ -91,10 +95,11 @@ def prepareArgs(conf):
             print("Now entering illegal version...")
         else:
             try:
-                auth = authenticate(config['username'], config['password'])
+                auth = authenticate(config['username'], config['password'], twitch = config['twitch'])
                 minecraftArguments['username'] = auth['name']
                 minecraftArguments['uuid'] = auth['uuid']
                 minecraftArguments['accessToken'] = auth['accessToken']
+                minecraftArguments['userProperties'] = auth['twitchToken']
             except:
                 print("Invalid combination of username and password. Please verify it again.")
                 print("Now entering illegal version...")
@@ -189,7 +194,7 @@ def getSystemType():
     elif sysstr == 'Darwin' :
         return 'osx'
 
-def authenticate(username, password, clientToken = ""):
+def authenticate(username, password, clientToken = "", twitch = False):
     url = 'https://authserver.mojang.com/authenticate'
     params = json.dumps({
               "agent": {
@@ -198,7 +203,8 @@ def authenticate(username, password, clientToken = ""):
                        },
               "username": username,
               "password": password,
-              "clientToken": clientToken
+              "clientToken": clientToken,
+              "requestUser": twitch
             }).encode()
     header = {'Content-type': 'application/json'}
     req = urllib.request.Request(
@@ -207,10 +213,15 @@ def authenticate(username, password, clientToken = ""):
         headers=header
     )
     res = json.loads(urllib.request.urlopen(req).read().decode())
+    try:
+        twitchToken = '''"{"twitch_access_token": ["%s"]}"''' % res["user"]["properties"][0]["value"]
+    except:
+        twitchToken = "{}"
     return {"accessToken" : res["accessToken"],
             "clientToken" :res["clientToken"],
             "uuid" : res["selectedProfile"]["id"],
-            "name" : res["selectedProfile"]["name"]
+            "name" : res["selectedProfile"]["name"],
+            "twitchToken" : twitchToken
             }
 
 if __name__ == "__main__":
