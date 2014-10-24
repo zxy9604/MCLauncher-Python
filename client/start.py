@@ -115,23 +115,23 @@ def downloadGame(config):
 
 def downloadDependence(config):
     urllib.request.urlretrieve(config['server']+ '/client/dependence.zip', 'dependence.zip', callback)
-    print("/n Extracting...")
+    print("\n Extracting...")
     unzip('dependence.zip', '.')
     os.remove('dependence.zip')
     with open('../config.json','w') as f:
         config['gameDir'] = '.minecraft'
-        f.write(json.dumps(config))
+        f.write(json.dumps(config, ensure_ascii=False, indent=4, separators = (', \r\n', ': ')))
 
 
 
 def downloadAssets(config):
     urllib.request.urlretrieve(config['server']+ '/client/assets.zip', 'assets.zip', callback)
-    print("/n Extracting...")
+    print("\n Extracting...")
     unzip('assets.zip', '.')
     os.remove('assets.zip')
     with open('../config.json','w') as f:
         config['assetsDir'] = config['gameDir'] + '/assets'
-        f.write(json.dumps(config))
+        f.write(json.dumps(config, ensure_ascii=False, indent=4, separators = (', \r\n', ': ')))
 
 def downloadVersion(server, version):
     versionList = fetchVersionList(server)
