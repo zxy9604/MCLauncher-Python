@@ -21,7 +21,23 @@ You should install:
 [Java 7](https://java.com/en/download/manual_java7.jsp)
 
 ##Documentation
+
 Edit `config.json` first.  
-Here's some [instructions](FAQ/config_instruction.md) of it.
+
+If the value of key `gameDir` is `'.'`,  this script will help you to download the game automatically from server. 
+ 
+Here's some [instructions](FAQ/config_instruction.md) of it.  
+
+####Start Game:
+
+Run  `python3 start.py` or `python start.py` if your os is Windows.  
+
+**Please ENSURE that you are using Python3**  
+
+If it doesn't work, check if you have installed Python first, then check if the path of Python has been added to `PATH`.  
+
+[How to add Python to `PATH`](https://docs.python.org/3.4/using/windows.html)
+
+
 ##Contributor
 Ray Zhang
