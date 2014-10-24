@@ -8,6 +8,12 @@ For instance, as a curious one, I would always be interested in finding some new
 
 Thus, I decided to make a tool to accomplish the synchronization of mods between clients and server.
 
+Accomplished synchonizing part, I found that it's unacceptable for me to launch game and to synchonize mods separately. You can image what a disaster it is, calling a launcher after updated mods.
+
+Thus! I ! DECIDED! TO! WRITE! A! INDEPENDENT! LAUNCHER! IN! PYTHON!
+
+Life is short, use Python!!!
+
 ##Environment
 You should install:  
 [Python3](https://python.org/)  
