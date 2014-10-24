@@ -1,14 +1,25 @@
 {
     "sync" : true,
+
     "authenticate" : true,
+
     "twitch" : false,
+
     "server": "http://mc.tbufoundation.com/",
+
     "username": "Hentai",
+
     "password": "2333333",
+
     "version": "1.7.10",
-    "gameDir": ".minecraft",
-    "assetsDir": ".minecraft/assets",
+
+    "gameDir": ".",
+
+    "assetsDir": ".",
+
     "maxMem": "1G",
+
     "javaPath" : "",
+
     "arch" : "64"
 }
