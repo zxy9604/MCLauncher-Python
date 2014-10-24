@@ -35,16 +35,6 @@ def fetchModList(server, version):
     print("Fetching mods list from server...")
     return json.loads(urllib.request.urlopen(server+'?version='+version).read().decode())
 
-# def callback(blockNum, blockSize, totalSize):
-#     w = ['Progress: ', Percentage(), ' ', Bar(marker=RotatingMarker('>-=')), ' ', ETA(), ' ', FileTransferSpeed()]
-#     pbar = ProgressBar(widgets=w, maxval=100).start()
-#     amount = 100.0 * blockNum * blockSize / totalSize
-#     if amount < 100:
-#         pbar.update(int(amount))
-#     else:
-#         pbar.update(int(amount))
-#         pbar.finish()
-
 def downloadMods(config):
     versionList = fetchVersionList(config['server']+'version.php')
     serverPath = versionList[config['version']]['server_path']
@@ -55,14 +45,14 @@ def downloadMods(config):
             print("Find:", f)
             url = config['server'] + serverPath[2:] + '/mods/'
             url += f[2:]
-            url = url.replace(' ', '%20')
+            url = url.replace(' ', '%20')           #fix some coding problems in http
             print("Download from",url)
             dirpath = f[:len(f)-f[::-1].find('/')]
-            if not os.path.exists(dirpath):
+            if not os.path.exists(dirpath):         #to check whether such a dir exists, if not, make it.
                 os.makedirs(dirpath)
             try:
                 urllib.request.urlretrieve(url, f)
-            except UnicodeEncodeError:
+            except UnicodeEncodeError:              #fucking encode problem. Never mind.
                 print("Ignore it")
             except:
                 print("The server is down right now. Please try again later!")
@@ -81,10 +71,10 @@ def prepareArgs(config):
                           "version": config["version"],
                           "gameDir": config["gameDir"],
                           "assetsDir" : config["assetsDir"],
-                          "assetIndex" : "1.7.10",      #所以这到底是啥
-                          "accessToken" : '{}',         #待补全X1
-                          "uuid" : '{}',                #待补全X2
-                          "userProperties" : '{}',      #233
+                          "assetIndex" : "1.7.10",      #WTF it is
+                          "accessToken" : '{}',         #to be filled later
+                          "uuid" : '{}',                #to be filled later
+                          "userProperties" : '{}',      #to be filled later
                           "userType" : "legacy",        #or mojang
                           "tweakClass" : "cpw.mods.fml.common.launcher.FMLTweaker",
                           "mainClass" : "wtf"
@@ -95,7 +85,7 @@ def prepareArgs(config):
             print("Now entering illegal version...")
         else:
             try:
-                auth = authenticate(config['username'], config['password'], twitch = config['twitch'])
+                auth = authenticate(config['username'], config['password'], twitch = config['twitch'])  #authenticate if legal
                 minecraftArguments['username'] = auth['name']
                 minecraftArguments['uuid'] = auth['uuid']
                 minecraftArguments['accessToken'] = auth['accessToken']
@@ -122,7 +112,7 @@ def parseArgs(config):
         args += '-Djava.library.path=".minecraft/natives" '
     args += '-cp '
     args += parseLibs(config['gameDir'], readjson(config['version']), config['arch'], config['version']) + ' '
-    args += parsePreparedArgs(minecraftArguments)
+    args += parsePreparedArgs(minecraftArguments)   #add other arguments
     return args
 
 def readjson(version):
@@ -136,7 +126,7 @@ def readjson(version):
 
 def parseLibs(path, libs, arch, version):
     result = '"'
-    if getSystemType() == 'windows':                # wcnm
+    if getSystemType() == 'windows':                                    # wcnm
         result += ";".join((parseSingleLib(path, lib, arch) for lib in libs))
         result += ';'+ path + '\\versions\\' + version + '\\' + version + '.jar'
     else:
@@ -157,13 +147,13 @@ def parseSingleLib(path, lib, arch):
                 result += '\\libraries\\'
                 result += name[:index].replace('.','\\') + '\\'         #part of using dots as splitter
                 result += name[index+1:].replace(':','\\') + '\\'       #part of using colon as splitter
-                result += name[index+1:].replace(':','-')               #At the same time, as the name of jar
+                result += name[index+1:].replace(':','-')               #At the same time, replace ':' by '-' then use it as the name of jar
             else:
                 result = path
                 result += '/libraries/'
                 result += name[:index].replace('.','/') + '/'           #part of using dots as splitter
                 result += name[index+1:].replace(':','/') + '/'         #part of using colon as splitter
-                result += name[index+1:].replace(':','-')               #At the same time, as the name of jar
+                result += name[index+1:].replace(':','-')               #At the same time, replace ':' by '-' then use it as the name of jar
             nativePart = lib['natives'][getSystemType()]
             if nativePart.find("${arch}"):                              #if ${arch} exists, replace it by the argument.
                 nativePart = nativePart.replace("${arch}", arch)
@@ -174,13 +164,13 @@ def parseSingleLib(path, lib, arch):
             result += '\\libraries\\'
             result += name[:index].replace('.','\\') + '\\'         #part of using dots as splitter
             result += name[index+1:].replace(':','\\') + '\\'       #part of using colon as splitter
-            result += name[index+1:].replace(':','-')               #At the same time, as the name of jar
+            result += name[index+1:].replace(':','-')               #At the same time, replace ':' by '-' then use it as the name of jar
         else:
             result = path
             result += '/libraries/'
             result += name[:index].replace('.','/') + '/'           #part of using dots as splitter
             result += name[index+1:].replace(':','/') + '/'         #part of using colon as splitter
-            result += name[index+1:].replace(':','-')               #At the same time, as the name of jar
+            result += name[index+1:].replace(':','-')               #At the same time, replace ':' by '-' then use it as the name of jar
         result += '.jar'
     return result
 
