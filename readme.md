@@ -8,10 +8,13 @@ For instance, as a curious one, I would always be interested in finding some new
 
 Thus, I decided to make a tool to accomplish the synchronization of mods between clients and server.
 
+##Environment
+You should install:  
+[Python3](https://python.org/)  
+[Java 7](https://java.com/en/download/manual_java7.jsp)
 
 ##Documentation
-Edit `updator.conf` first.
-You should change to your own game path and launcher path first.
-Then RUN IT DIRECTLY!.
+Edit `updator.conf` first.  
+Here's some [instructions](/FAQ/config_instruction.md) of it.
 ##Contributor
 Ray Zhang

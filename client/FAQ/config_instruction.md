@@ -1,7 +1,7 @@
 	{
 	   "sync" : true,                                  
 	   	//若不需与服务器同步mods, 改为false
-	   "authenticate" : true,                         
+	   "authenticate" : false,                         
 	    //想用正版登录 改为true
 	   "twitch" : false,								//是否开启twitch直播
 	   "server": "http://mc.tbufoundation.com/",
