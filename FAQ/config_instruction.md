@@ -3,7 +3,8 @@
 	   	//若不需与服务器同步mods, 改为false
 	   "authenticate" : false,                         
 	    //想用正版登录 改为true
-	   "twitch" : false,								//是否开启twitch直播
+	   "twitch" : false,		
+	   //是否开启twitch直播
 	   "server": "http://mc.tbufoundation.com/",
 	   "username": "Hentai",                           
 	   //正版用户请填写账户(邮箱), 盗版用户..起个好名字吧!
