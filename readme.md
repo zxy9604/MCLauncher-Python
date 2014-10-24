@@ -1,5 +1,6 @@
-Sync for mods of Minecraft
+A Minecraft Launcher in Python
 ---------------------------
+[中文](readme.cn.md)
 ##Motivation
 There are many minecraft servers today.  
 Although maintaining a server is not hard, there are still some problems when concentrating the interaction with users.   
@@ -20,7 +21,7 @@ You should install:
 [Java 7](https://java.com/en/download/manual_java7.jsp)
 
 ##Documentation
-Edit `updator.conf` first.  
-Here's some [instructions](/FAQ/config_instruction.md) of it.
+Edit `config.json` first.  
+Here's some [instructions](FAQ/config_instruction.md) of it.
 ##Contributor
 Ray Zhang
