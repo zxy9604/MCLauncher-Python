@@ -1,8 +1,10 @@
 {
-    "sync" : false,
+    "sync" : true,
+    "authenticate" : true,
     "server": "http://mc.tbufoundation.com/",
     "username": "Hentai",
-    "version": "1.8",
+    "password": "2333333",
+    "version": "1.7.10",
     "gameDir": ".minecraft",
     "assetsDir": ".minecraft/assets",
     "maxMem": "1G",
