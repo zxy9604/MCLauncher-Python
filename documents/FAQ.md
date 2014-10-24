@@ -16,7 +16,7 @@
 	天灭GBK!
 
 3. 其实你完全没必要把`config.json`里的`gameDir`和`assetsDir`改成绝对路径. 
-	相对路径是完全可以而且推荐的.
+	相对路径是完全可以而且推荐的.  
 	[什么是绝对路径与相对路径](http://libai.math.ncu.edu.tw/bcc16/4/unix/13.shtml)
 
 4. 没事儿干别乱改`config.json`. 如果改出来什么错务必告诉我, 我尽可能的补上.   
