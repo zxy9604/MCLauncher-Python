@@ -221,8 +221,3 @@ if __name__ == "__main__":
         downloadMods(config)
     os.chdir(cwd + '/' + config['gameDir'])
     launchMinecraft(parseArgs(config))
-
-
-
-
-
