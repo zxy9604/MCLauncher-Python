@@ -98,23 +98,14 @@ def filesizeformat(bytes):
 
     filesize_number_format = lambda value: round(value, 1)
 
-    if bytes < 1024:
-        return "%(size)d bytes" % {'size': bytes}
-    if bytes < 1024 * 1024:
-        return "%s KB" % filesize_number_format(bytes / 1024)
-    if bytes < 1024 * 1024 * 1024:
-        return "%s MB" % filesize_number_format(bytes / (1024 * 1024))
-    if bytes < 1024 * 1024 * 1024 * 1024:
-        return "%s GB" % filesize_number_format(bytes / (1024 * 1024 * 1024))
-    if bytes < 1024 * 1024 * 1024 * 1024 * 1024:
-        return "%s TB" % filesize_number_format(bytes / (1024 * 1024 * 1024 * 1024))
-    return "%s PB" % filesize_number_format(bytes / (1024 * 1024 * 1024 * 1024 * 1024))
+    return "%s MB" % filesize_number_format(bytes / (1024 * 1024))
+
 
 def callback(count, blockSize, totalSize):
     width = 32
     percentage = 100 * (count * blockSize)/totalSize
     currentWidth = width*percentage/100
-    sys.stdout.write('% 3d%% [%s%s] %s remaining    \r' % (percentage, '#' * int(currentWidth), ' ' * int(width - currentWidth), filesizeformat(totalSize - count * blockSize)))
+    sys.stdout.write('% 3d%% [%s%s] %s remaining    \r' % (percentage, '=' * int(currentWidth), ' ' * int(width - currentWidth), filesizeformat(totalSize - count * blockSize)))
 #download game
 
 
@@ -228,6 +219,8 @@ def parseArgs(config):
     args += '-cp '
     args += parseLibs(config['gameDir'], readjson(config['version']), config['arch'], config['version']) + ' '
     args += parsePreparedArgs(minecraftArguments)   #add other arguments
+    if getSystemType() == 'windows' :
+        args = '"' + args + '"'
     return args
 
 def readjson(version):
