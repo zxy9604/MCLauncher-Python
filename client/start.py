@@ -216,6 +216,8 @@ def parseArgs(config):
     javaPath = config["javaPath"]
     if javaPath == '':
         javaPath = 'java'                           #if it's not exists, use PATH
+    if getSystemType() == "windows":
+        javaPath = '"' + javaPath + '"'
     args += javaPath + ' '                          #add java path to
     args += '-Xmx' + config["maxMem"] + ' '         #add -Xmx part
     args += '-Dfml.ignoreInvalidMinecraftCertificates=true '
@@ -226,8 +228,6 @@ def parseArgs(config):
     args += '-cp '
     args += parseLibs(config['gameDir'], readjson(config['version']), config['arch'], config['version']) + ' '
     args += parsePreparedArgs(minecraftArguments)   #add other arguments
-    if getSystemType() == 'windows':                #QAQ
-        args = '"'+args+'"'
     return args
 
 def readjson(version):
