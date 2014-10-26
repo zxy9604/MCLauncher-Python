@@ -105,7 +105,7 @@ def callback(count, blockSize, totalSize):
     width = 32
     percentage = 100 * (count * blockSize)/totalSize
     currentWidth = width*percentage/100
-    sys.stdout.write('% 3d%% [%s%s] %s remaining    \r' % (percentage, '=' * int(currentWidth), ' ' * int(width - currentWidth), filesizeformat(abs(totalSize - count * blockSize)))
+    sys.stdout.write('% 3d%% [%s%s] %s remaining    \r' % (percentage, '=' * int(currentWidth), ' ' * int(width - currentWidth), filesizeformat(totalSize - count * blockSize)))
 #download game
 
 
@@ -199,7 +199,7 @@ def prepareArgs(config):
                 print("Now entering illegal version...")
 
 def parsePreparedArgs(args):
-    return "{config[mainClass]} --username {config[username]} --version {config[version]} --gameDir {config[gameDir]}/versions/{config[version]} --assetsDir {config[assetsDir]} --uuid {config[uuid]} --accessToken {config[accessToken]} --userProperties {config[userProperties]} --userType {config[userType]} --tweakClass {config[tweakClass]}".format(config = args)
+    return "{config[mainClass]} --username {config[username]} --version {config[version]} --gameDir {config[gameDir]}/versions/{config[version]} --assetsDir {config[assetsDir]} --assetIndex {config[assetIndex]} --uuid {config[uuid]} --accessToken {config[accessToken]} --userProperties {config[userProperties]} --userType {config[userType]} --tweakClass {config[tweakClass]}".format(config = args)
 
 def parseArgs(config):
     args = ''
