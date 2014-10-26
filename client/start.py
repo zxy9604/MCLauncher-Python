@@ -105,7 +105,7 @@ def callback(count, blockSize, totalSize):
     width = 32
     percentage = 100 * (count * blockSize)/totalSize
     currentWidth = width*percentage/100
-    sys.stdout.write('% 3d%% [%s%s] %s remaining    \r' % (percentage, '=' * int(currentWidth), ' ' * int(width - currentWidth), filesizeformat(totalSize - count * blockSize)))
+    sys.stdout.write('% 3d%% [%s%s] %s remaining    \r' % (percentage, '=' * int(currentWidth), ' ' * int(width - currentWidth), filesizeformat(abs(totalSize - count * blockSize)))
 #download game
 
 
