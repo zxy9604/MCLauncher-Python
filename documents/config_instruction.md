@@ -11,7 +11,7 @@
 	   "password": "2333333",                          
 	   //如果不是正版用户 别管他
 	   "version": "1.7.10",                            
-	   //当前所选择的版本
+	   //当前所选择的版本 目前服务器有1.7.10和1.8.(可以自己添加)
 	   "gameDir": ".minecraft",                        
 	   //游戏主目录位置
 	   "assetsDir": ".minecraft/assets",
