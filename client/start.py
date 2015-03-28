@@ -8,6 +8,7 @@ import urllib.request
 import platform
 import zipfile
 import sys
+from string import Template
 
 minecraftArguments = {}
 
@@ -181,7 +182,8 @@ def prepareArgs(config):
                           "userProperties" : '{}',      #to be filled later
                           "userType" : "legacy",        #or mojang
                           "tweakClass" : "cpw.mods.fml.common.launcher.FMLTweaker",
-                          "mainClass" : "wtf"
+                          "mainClass" : "wtf",
+                          "minecraftArguments": ""
                           }
     if config['authenticate'] == True:
         if (not 'username' in config) or (not 'password' in config):
@@ -199,7 +201,20 @@ def prepareArgs(config):
                 print("Now entering illegal version...")
 
 def parsePreparedArgs(args):
-    return "{config[mainClass]} --username {config[username]} --version {config[version]} --gameDir {config[gameDir]}/versions/{config[version]} --assetsDir {config[assetsDir]} --assetIndex {config[assetIndex]} --uuid {config[uuid]} --accessToken {config[accessToken]} --userProperties {config[userProperties]} --userType {config[userType]} --tweakClass {config[tweakClass]}".format(config = args)
+    d = {
+        'auth_player_name' : args['username'],
+        'version_name' : args['version'],
+        'game_directory' : args['gameDir'],
+        'assets_root' : args['assetsDir'],
+        'game_assets' : args['assetsDir'],
+        'assets_index_name' : args['assetIndex'],
+        'auth_uuid' : args['uuid'],
+        'auth_access_token' : args['accessToken'],
+        'auth_session' : args['accessToken'],
+        'user_properties' : args['userProperties'],
+        'user_type' : args['userType']
+    }
+    return Template(args['minecraftArguments']).safe_substitute(d)
 
 def parseArgs(config):
     args = ''
@@ -218,6 +233,7 @@ def parseArgs(config):
         args += '-Djava.library.path=".minecraft/natives" '
     args += '-cp '
     args += parseLibs(config['gameDir'], readjson(config['version']), config['arch'], config['version']) + ' '
+    args += minecraftArguments['mainClass'] + ' '
     args += parsePreparedArgs(minecraftArguments)   #add other arguments
     if getSystemType() == 'windows' :
         args = '"' + args + '"'
@@ -228,6 +244,7 @@ def readjson(version):
         argsList = json.loads(f.read())
     minecraftArguments['assetIndex'] = argsList['assets']
     minecraftArguments['mainClass'] = argsList['mainClass']
+    minecraftArguments['minecraftArguments'] = argsList['minecraftArguments']
     libs = argsList['libraries']
     return libs
 

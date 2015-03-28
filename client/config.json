@@ -1,25 +1,25 @@
 {
-    "sync" : true,
+    "version": "1.7.10", 
 
-    "authenticate" : true,
+    "password": "2333333", 
 
-    "twitch" : false,
+    "assetsDir": ".", 
 
-    "server": "http://mc.tbufoundation.com/",
+    "username": "Hentai", 
 
-    "username": "Hentai",
+    "server": "http://mc.tbufoundation.com/", 
 
-    "password": "2333333",
+    "twitch": false, 
 
-    "version": "1.7.10",
+    "arch": "64", 
 
-    "gameDir": ".",
+    "authenticate": true, 
 
-    "assetsDir": ".",
+    "sync": true, 
 
-    "maxMem": "1G",
+    "gameDir": ".minecraft", 
 
-    "javaPath" : "",
+    "maxMem": "1G", 
 
-    "arch" : "64"
+    "javaPath": ""
 }
